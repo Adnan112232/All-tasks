@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Simple Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #f4f7fb;
+    }
+    .calc {
+      background: #fff;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      text-align: center;
+      width: 320px;
+    }
+    .calc h2 {
+      margin-bottom: 15px;
+      color: #333;
+    }
+    input {
+      width: 240px;
+      padding: 12px;
+      margin: 8px;
+      font-size: 18px; 
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    .operations {
+      margin: 12px 0;
+    }
+    .operations button {
+      padding: 12px 18px;
+      margin: 5px;
+      font-size: 18px;
+      border: none;
+      border-radius: 6px;
+      background: #4CAF50;
+      color: white;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .operations button.active {
+      background: #2196F3;
+    }
+    .operations button:hover {
+      background: #45a049;
+    }
+    #calcBtn {
+      margin-top: 10px;
+      padding: 12px 25px;
+      font-size: 18px;
+      border: none;
+      border-radius: 6px;
+      background: #ff9800;
+      color: white;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    #calcBtn:hover {
+      background: #e68900;
+    }
+    #result {
+      margin-top: 15px;
+      font-size: 20px;
+      font-weight: bold;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <div class="calc">
+    <h2>Simple Calculator</h2>
+    <input type="number" id="num1" placeholder="Enter First Number"><br>
+    <input type="number" id="num2" placeholder="Enter Second Number"><br>
+    
+    <div class="operations">
+      <button onclick="setOperation('+')">+</button>
+      <button onclick="setOperation('-')">-</button>
+      <button onclick="setOperation('*')">×</button>
+      <button onclick="setOperation('/')">÷</button>
+    </div>
+
+    <button id="calcBtn" onclick="calculate()">Calculate</button>
+    <div id="result">Result: </div>
+  </div>
+
+  <script>
+    let selectedOp = null;
+
+    function setOperation(op) {
+      selectedOp = op;
+      let buttons = document.querySelectorAll(".operations button");
+      buttons.forEach(btn => btn.classList.remove("active"));
+      event.target.classList.add("active");
+    }
+
+    function calculate() {
+      let n1 = parseFloat(document.getElementById("num1").value);
+      let n2 = parseFloat(document.getElementById("num2").value);
+      let res = "";
+
+      if (isNaN(n1) || isNaN(n2)) {
+        res = "⚠️ Please enter both numbers.";
+      } else if (!selectedOp) {
+        res = "⚠️ Please select an operation.";
+      } else {
+        switch(selectedOp) {
+          case "+": res = n1 + n2; break;
+          case "-": res = n1 - n2; break;
+          case "*": res = n1 * n2; break;
+          case "/": res = n2 !== 0 ? (n1 / n2) : "❌ Cannot divide by 0"; break;
+        }
+      }
+      document.getElementById("result").innerText = "Result: " + res;
+    }
+  </script>
+</body>
+</html>
